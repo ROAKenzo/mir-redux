@@ -1,71 +1,56 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
+import { counterActions } from '../store';
 
+import './Counter.module.css';
 const Counter = () => {
   const dispatch = useDispatch();
-  const counter = useSelector((state) => state.counter);
-  const show = useSelector((state) => state.show);
+  const count = useSelector((state) => state.counter.counter);
+  const show = useSelector((state) => state.counter.show);
+  console.log(count);
 
   const incrementHandler = () => {
-    dispatch({ type: "increment" });
-  };
-  const incrementHandler5 = () => {
-    dispatch({ type: "increment5" });
+    dispatch(counterActions.increment());
   };
   const decrementHandler = () => {
-    dispatch({ type: "decrement" });
+    dispatch(counterActions.decrement());
+  };
+  const incrementHandler5 = () => {
+    dispatch(counterActions.increment5());
   };
   const decrementHandler5 = () => {
-    dispatch({ type: "decrement5" });
-  };
-  const resetHandler = () => {
-    dispatch({ type: "reset" });
+    dispatch(counterActions.decrement5());
   };
   const toggleCounterHandler = () => {
-    dispatch({ type: "toggleCounter" });
+    dispatch(counterActions.toggle());
   };
-
+  const resetCounterHandler = () => {
+    dispatch(counterActions.reset());
+  };
   return (
     <div>
       <h1>Redux Counter</h1>
-      {show && <div>{counter}</div>}
-
-      <button
-        className="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-        onClick={resetHandler}
-      >
-        Reset
-      </button>
-      <button
-        className="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-        onClick={incrementHandler}
-      >
-        Increment
-      </button>
-      <button
-        className="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-        onClick={decrementHandler}
-      >
-        Decrement
-      </button>
-      <button
-        className="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-        onClick={incrementHandler5}
-      >
-        Increment5
-      </button>
-      <button
-        className="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-        onClick={decrementHandler5}
-      >
-        Decrement5
-      </button>
-      <div>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-          onClick={toggleCounterHandler}
-        >
-          Toggle Counter
+      {show && <div>{count}</div>}
+      <div className='button-container'>
+        <button className='btn' onClick={resetCounterHandler}>
+          Reset
         </button>
+        <button className='btn' onClick={incrementHandler}>
+          Increment
+        </button>
+        <button className='btn' onClick={decrementHandler}>
+          Decrement
+        </button>
+        <button className='btn' onClick={incrementHandler5}>
+          Increment5
+        </button>
+        <button className='btn' onClick={decrementHandler5}>
+          Decrement5
+        </button>
+        <div>
+          <button className='btn' onClick={toggleCounterHandler}>
+            Toggle Counter
+          </button>
+        </div>
       </div>
     </div>
   );

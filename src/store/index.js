@@ -1,46 +1,45 @@
-import { createStore } from 'redux';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 
-const counterReducer = (state = { counter: 0,show:true }, action) => {
-  if (action.type === 'reset') {
-    return {
-      ...state,
-      counter: state.counter =0,
-    };
-  }
-  if (action.type === 'increment') {
-    return {
-      ...state,
-      counter: state.counter + 1,
-    };
-  }
-  if (action.type === 'decrement') {
-    return {
-      ...state,
-      counter: state.counter - 1,
-    };
-  }
-  if (action.type === 'increment5') {
-    return {
-      ...state,
-      counter: state.counter + 5,
-    };
-  }
-  if (action.type === 'decrement5') {
-    return {
-      ...state,
-      counter: state.counter - 5,
-    };
-  }
-  if(action.type==='toggleCounter'){
-    return {
-      ...state,
-      show: !state.show,
-    }
-  }
-
-  return state;
+const initialCounterState = {
+  counter: 0,
+  show: true,
 };
 
-const store = createStore(counterReducer);
+//--counter Slicer--//
+export const counterSlicer = createSlice({
+  name: 'counter',
+  initialState: initialCounterState,
+  reducers: {
+    increment: (state) => {
+      state.counter += 1;
+    },
+    decrement: (state) => {
+      state.counter -= 1;
+    },
+    increment5: (state) => {
+      state.counter += 5;
+    },
+    decrement5: (state) => {
+      state.counter -= 5;
+    },
+    reset: (state) => {
+      state.counter = 0;
+    },
+    toggle: (state) => {
+      state.show = !state.show;
+    },
+    incrementByAmount: (state, action) => {
+      state.counter += action.payload;
+    },
+  },
+});
 
+// Action creators are generated for each case reducer function
+export const counterActions = counterSlicer.actions;
+
+const store = configureStore({
+  reducer: {
+    counter: counterSlicer.reducer,
+  },
+});
 export default store;
